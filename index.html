@@ -29,8 +29,8 @@ let W=0,H=0,dpr=1,cell=30,bx=0,by=0,bw=0,bh=0,hudH=80;
 /* ---------- storage ---------- */
 function lsGet(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-let best=parseInt(lsGet('blockdrop_best','0'))||0;
-let muted=lsGet('blockdrop_muted','0')==='1';
+let best=parseInt(lsGet('tetris_best','0'))||0;
+let muted=lsGet('tetris_muted','0')==='1';
 
 /* ---------- audio ---------- */
 let ac=null;
@@ -190,7 +190,7 @@ function finishClear(){
 }
 function gameOver(){
   cur=null;phase='closing';closeT=0;
-  if(score>best){best=score;lsSet('blockdrop_best',String(best));newBest=true}
+  if(score>best){best=score;lsSet('tetris_best',String(best));newBest=true}
   sfx.over();buzz(80);
 }
 
@@ -225,7 +225,7 @@ cv.addEventListener('pointerdown',e=>{
   if(phase==='over'){if(overT>700){newGame();phase='play';sfx.start();}return}
   if(phase!=='play')return;
   if(hit(btns.pause,x,y)){togglePause();g=null;return}
-  if(hit(btns.sound,x,y)){muted=!muted;lsSet('blockdrop_muted',muted?'1':'0');if(!muted)sfx.ui();g=null;return}
+  if(hit(btns.sound,x,y)){muted=!muted;lsSet('tetris_muted',muted?'1':'0');if(!muted)sfx.ui();g=null;return}
   if(paused){paused=false;sfx.ui();g=null;return}
   g={sx:x,sy:y,lx:x,acc:0,t0:performance.now(),moved:false,slammed:false};
 },{passive:false});
